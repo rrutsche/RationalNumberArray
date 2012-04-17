@@ -10,9 +10,22 @@ struct RationalNumberArray{
 
 RationalNumberArray* rnaCreate(int capacity){
     RationalNumberArray* rnArray = (RationalNumberArray*) malloc(capacity * sizeof(RationalNumber));
+    rnArray->capacity = capacity;
+    rnArray->size++;
+    if(!rnArray) {
+        // Out of Memory!??
+    }
     return rnArray;
 }
 
-void rnAdd(RationalNumberArray* rna){
+void rnaDelete(RationalNumberArray* rna){
+    free(rna);
+}
 
+int rnaCapacity(RationalNumberArray* rna){
+    return rna->capacity;
+}
+
+int rnaSize(RationalNumberArray *rna){
+    return rna->size;
 }
