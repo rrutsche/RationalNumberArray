@@ -11,7 +11,6 @@ struct RationalNumberArray{
 RationalNumberArray* rnaCreate(int capacity){
     RationalNumberArray* rnArray = (RationalNumberArray*) malloc(capacity * sizeof(RationalNumber));
     rnArray->capacity = capacity;
-    rnArray->size++;
     if(!rnArray) {
         // Out of Memory!??
     }
