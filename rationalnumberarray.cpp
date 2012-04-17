@@ -9,15 +9,21 @@ struct RationalNumberArray{
 };
 
 RationalNumberArray* rnaCreate(int capacity){
-    RationalNumberArray* rnArray = (RationalNumberArray*) malloc(capacity * sizeof(RationalNumber));
-    rnArray->capacity = capacity;
-    if(!rnArray) {
+    RationalNumberArray* rna = (RationalNumberArray*) malloc(sizeof(RationalNumberArray));
+    RationalNumber* rn = (RationalNumber*) malloc(capacity * sizeof(RationalNumber));
+    if(!rna) {
         // Out of Memory!??
+    }else if(!rn){
+        // Out of Memory!!!
     }
-    return rnArray;
+    rna->capacity = capacity;
+    rna->size = 0;
+    rna->data = rn;
+    return rna;
 }
 
 void rnaDelete(RationalNumberArray* rna){
+    free(rna->data);
     free(rna);
 }
 
@@ -28,3 +34,14 @@ int rnaCapacity(RationalNumberArray* rna){
 int rnaSize(RationalNumberArray *rna){
     return rna->size;
 }
+
+void rnaAdd(RationalNumberArray* rna, RationalNumber rn){
+
+    if(rna->size > rna->capacity - 1){
+        realloc(rna->data, 10 * sizeof(RationalNumber));
+        rna->capacity = rna->capacity + 10;
+    }
+    rna->data[rna->size] = rn;
+    rna->size++;
+}
+

@@ -46,6 +46,7 @@ int main()
 
     RationalNumberArray* rna = rnaCreate(5);
     printf("capacity of rna: %d \n", rnaCapacity(rna));
+    rnaAdd(rna,n1);
     printf("size of rna: %d \n", rnaSize(rna));
 
 
