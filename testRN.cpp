@@ -56,7 +56,8 @@ int main()
     printf("-------rnaSet()--------\n");
     rnaSet(rna, &n2, 10);
     printf("capacity of rna: %d \n", rnaCapacity(rna));
-    printf("new value in rna. index: %d, value: %d/%d \n", 10, rnaGet(rna, 10).nominator, rnaGet(rna, 10).denominator);
+    RationalNumber* rnp = rnaGet(rna, 10);
+    printf("new value in rna. index: %d, value: %d/%d \n", 10, rnp->nominator, rnp->denominator);
 
 
     printf(" successful!\n");

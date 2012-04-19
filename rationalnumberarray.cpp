@@ -69,7 +69,6 @@ void rnaSet(RationalNumberArray* rna, RationalNumber* rn, int index){
     rna->data[index] = *rn;
 }
 
-RationalNumber rnaGet(RationalNumberArray* rna, int index){
-
-    return rna->data[index];
+RationalNumber* rnaGet(RationalNumberArray* rna, int index){
+    return &(rna->data[index]);
 }
