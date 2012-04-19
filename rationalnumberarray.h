@@ -8,13 +8,13 @@ struct RationalNumberArray;
 #include "rationalnumber.h"
 
 RationalNumberArray* rnaCreate(int size);
-void rnaAdd(RationalNumberArray* rna, RationalNumber rn);
+void rnaAdd(RationalNumberArray* rna, RationalNumber* rn);
 void rnaDelete(RationalNumberArray* rna);
 int rnaCapacity(RationalNumberArray* rna);
 int rnaSize(RationalNumberArray* rna);
+void rnaResize(RationalNumberArray* rna, int size);
+void rnaSet(RationalNumberArray* rna, RationalNumber* rn, int position);
 /*
-rnaResize();
-rnaSet();
 rnaGet();
 rnaRemove();
 */

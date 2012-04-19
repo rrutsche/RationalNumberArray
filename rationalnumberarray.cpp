@@ -35,13 +35,31 @@ int rnaSize(RationalNumberArray *rna){
     return rna->size;
 }
 
-void rnaAdd(RationalNumberArray* rna, RationalNumber rn){
+void rnaAdd(RationalNumberArray* rna, RationalNumber *rn){
 
     if(rna->size > rna->capacity - 1){
-        realloc(rna->data, 10 * sizeof(RationalNumber));
+        realloc(rna->data, sizeof(rna->data) + 10 * sizeof(RationalNumber));
         rna->capacity = rna->capacity + 10;
     }
-    rna->data[rna->size] = rn;
+    rna->data[rna->size] = *rn;
     rna->size++;
 }
 
+void rnaResize(RationalNumberArray* rna, int size){
+    realloc(rna->data, size * sizeof(RationalNumber));
+}
+
+void rnaSet(RationalNumberArray* rna, RationalNumber* rn, int position){
+    if(position >= rna->capacity){
+
+        int dif = position - rna->capacity + 1;
+        realloc(rna->data, sizeof(rna->data) + dif);
+        RationalNumber rnTemp = {0,1};
+        for(int i=rna->capacity; i<position; i++){
+            rna->data[i] = rnTemp;
+        }
+        rna->capacity = position + 1;
+        rna->size = position;
+    }
+    rna->data[position] = *rn;
+}

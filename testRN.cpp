@@ -45,8 +45,9 @@ int main()
     assert( rnIsNaN(t4) );
 
     RationalNumberArray* rna = rnaCreate(5);
+    RationalNumber* rn = &n1;
     printf("capacity of rna: %d \n", rnaCapacity(rna));
-    rnaAdd(rna,n1);
+    rnaAdd(rna,rn);
     printf("size of rna: %d \n", rnaSize(rna));
 
 
