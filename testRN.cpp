@@ -45,10 +45,18 @@ int main()
     assert( rnIsNaN(t4) );
 
     RationalNumberArray* rna = rnaCreate(5);
-    RationalNumber* rn = &n1;
+    RationalNumber* rn1 = &n1;
+
     printf("capacity of rna: %d \n", rnaCapacity(rna));
-    rnaAdd(rna,rn);
-    printf("size of rna: %d \n", rnaSize(rna));
+
+    printf("-------rnaAdd()--------\n");
+    rnaAdd(rna,rn1);
+    printf("size of rna: %d \n\n", rnaSize(rna));
+
+    printf("-------rnaSet()--------\n");
+    rnaSet(rna, &n2, 10);
+    printf("capacity of rna: %d \n", rnaCapacity(rna));
+    printf("new value in rna. index: %d, value: %d/%d \n", 10, rnaGet(rna, 10).nominator, rnaGet(rna, 10).denominator);
 
 
     printf(" successful!\n");

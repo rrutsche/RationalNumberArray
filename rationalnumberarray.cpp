@@ -1,6 +1,7 @@
 #include "rationalnumber.h"
 #include "rationalnumberarray.h"
 #include <cstdlib>
+#include <stdio.h>
 
 struct RationalNumberArray{
     RationalNumber* data;
@@ -47,19 +48,28 @@ void rnaAdd(RationalNumberArray* rna, RationalNumber *rn){
 
 void rnaResize(RationalNumberArray* rna, int size){
     realloc(rna->data, size * sizeof(RationalNumber));
+    rna->capacity = size * sizeof(RationalNumber);
+    if(rna->capacity < rna->size){
+        rna->size = rna->capacity;
+    }
 }
 
-void rnaSet(RationalNumberArray* rna, RationalNumber* rn, int position){
-    if(position >= rna->capacity){
+void rnaSet(RationalNumberArray* rna, RationalNumber* rn, int index){
+    if(index >= rna->capacity){
 
-        int dif = position - rna->capacity + 1;
-        realloc(rna->data, sizeof(rna->data) + dif);
+        realloc(rna->data, (index + 1) * sizeof(RationalNumber));
         RationalNumber rnTemp = {0,1};
-        for(int i=rna->capacity; i<position; i++){
+        int i = rna->capacity;
+        for(i; i<index; i++){
             rna->data[i] = rnTemp;
         }
-        rna->capacity = position + 1;
-        rna->size = position;
+        rna->capacity = index + 1;
+        rna->size = index;
     }
-    rna->data[position] = *rn;
+    rna->data[index] = *rn;
+}
+
+RationalNumber rnaGet(RationalNumberArray* rna, int index){
+
+    return rna->data[index];
 }

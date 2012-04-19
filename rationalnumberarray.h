@@ -13,8 +13,9 @@ void rnaDelete(RationalNumberArray* rna);
 int rnaCapacity(RationalNumberArray* rna);
 int rnaSize(RationalNumberArray* rna);
 void rnaResize(RationalNumberArray* rna, int size);
-void rnaSet(RationalNumberArray* rna, RationalNumber* rn, int position);
+void rnaSet(RationalNumberArray* rna, RationalNumber* rn, int index);
+RationalNumber rnaGet(RationalNumberArray* rna, int index);
 /*
-rnaGet();
+
 rnaRemove();
 */
