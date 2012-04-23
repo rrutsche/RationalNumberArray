@@ -4,16 +4,20 @@
 #include <stdio.h>
 #include <string.h>
 
+enum RNAError{
+    NAN,
+    OUT_OF_MEMORY,
+    INVALID_INDEX,
+    INVALID_RNA
+};
 struct RationalNumberArray{
     RationalNumber* data;
     int size;
     int capacity;
-    enum error{
-        NAN,
-        OUT_OF_MEMORY,
-        INVALID_INDEX
-    };
+    RNAError* error;
 };
+
+
 
 /*
     rnaCreate()
@@ -23,10 +27,10 @@ struct RationalNumberArray{
 RationalNumberArray* rnaCreate(const int capacity){
     RationalNumberArray* rna = (RationalNumberArray*) malloc(sizeof(RationalNumberArray));
     RationalNumber* rn = (RationalNumber*) malloc(capacity * sizeof(RationalNumber));
-    if(!rna) {
-        // Out of Memory!??
-    }else if(!rn){
-        // Out of Memory!!!
+    RNAError* err = (RNAError*) malloc(sizeof(RNAError));
+    rna->error = err;
+    if(!rna || !rn || !err) {
+        rna->error = OUT_OF_MEMORY;
     }
     rna->capacity = capacity;
     rna->size = 0;
@@ -39,6 +43,9 @@ RationalNumberArray* rnaCreate(const int capacity){
     Deletes the allocated memory of the given RationalNumberArray.
 */
 void rnaDelete(RationalNumberArray* rna){
+    if(!rna){
+        rna->error = INVALID_RNA;
+    }
     free(rna->data);
     free(rna);
 }
@@ -48,6 +55,9 @@ void rnaDelete(RationalNumberArray* rna){
     Returns the capacity of the given RationalNumberArray
 */
 int rnaCapacity(const RationalNumberArray* rna){
+    if(!rna){
+        rna->error = INVALID_RNA;
+    }
     return rna->capacity;
 }
 
@@ -56,6 +66,9 @@ int rnaCapacity(const RationalNumberArray* rna){
     Returns the size of the given RationalNumberArray
 */
 int rnaSize(const RationalNumberArray *rna){
+    if(!rna){
+        rna->error = INVALID_RNA;
+    }
     return rna->size;
 }
 
@@ -66,6 +79,11 @@ int rnaSize(const RationalNumberArray *rna){
 */
 void rnaAdd(RationalNumberArray* const rna, const RationalNumber *rn){
 
+    if(rnIsNaN(rn)){
+        rna->error = NAN;
+    }else if(!rna){
+        rna->error = INVALID_RNA;
+    }
     if(rna->size > rna->capacity - 1){
         realloc(rna->data, sizeof(rna->data) + 10 * sizeof(RationalNumber));
         rna->capacity = rna->capacity + 10;

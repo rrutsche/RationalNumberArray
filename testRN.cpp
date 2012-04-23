@@ -44,6 +44,41 @@ int main()
     assert( rnEqual(t2, t3) );
     assert( rnIsNaN(t4) );
 
+    printf("Performing unit tests for RationalNumberArray...");
+     /* Part 2 - RationalNumberArray type */
+        printf("\n");
+
+        RationalNumber *rn1 = &n1;
+        RationalNumber *rn2 = &n2;
+        RationalNumber *rn3 = &n3;
+        RationalNumber *rn4 = &n4;
+
+        RationalNumberArray *rna = rnaCreate(10);
+
+        rnaSet(rna,rn1,0);
+        rnaSet(rna,rn2,3);
+        rnaSet(rna,rn3,6);
+        rnaSet(rna,rn4,8);
+
+        assert(rnEqual(n1,*rnaGet(rna,0)));
+        assert(rnEqual(n2,*rnaGet(rna,3)));
+        assert(rnEqual(n3,*rnaGet(rna,6)));
+        assert(rnEqual(n3,*rnaGet(rna,8)));
+
+        rnaRemove(rna,0,3);
+        assert(!rnEqual(n1,*rnaGet(rna,0)));
+        assert(!rnEqual(n2,*rnaGet(rna,3)));
+
+        assert(10 == rnaSize(rna));
+
+        rnaSet(rna, rn1, 14);
+        assert(15 == rnaSize(rna));
+        assert(15 < rnaCapacity(rna));
+
+        rnaAdd(rna, rn2);
+        assert(rnEqual(n2,*rnaGet(rna,rnaSize(rna)-1)));
+
+/*
     RationalNumberArray* rna = rnaCreate(5);
 
     printf("capacity of rna: %d \n", rnaCapacity(rna));
@@ -94,7 +129,7 @@ int main()
     printf("size of rna: %d \n", rnaSize(rna));
     printf("capacity of rna: %d \n", rnaCapacity(rna));
     rnaToString(rna);
-
+*/
     printf(" successful!\n");
 
     return 0;
