@@ -111,15 +111,19 @@ void rnaResize(RationalNumberArray* const rna, const int size){
     array will be resized.
 */
 void rnaSet(RationalNumberArray* const rna, const RationalNumber* rn, const int index){
-    if(index >= rna->capacity){
 
-        realloc(rna->data, (index + 1) * sizeof(RationalNumber));
-        RationalNumber rnTemp = {0,1};
+    RationalNumber rnTemp = {0,1};
+    if(index >= rna->capacity){
+        int dif = 2 * index;
+        realloc(rna->data, dif * sizeof(RationalNumber));
+        rna->capacity = dif;
+    }
+
+    if(index >= rna->size){
         int i = rna->size;
         for(i; i<index; i++){
             rna->data[i] = rnTemp;
         }
-        rna->capacity = index + 1;
         rna->size = index + 1;
     }
     rna->data[index] = *rn;

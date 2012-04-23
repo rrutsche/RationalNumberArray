@@ -55,21 +55,21 @@ int main()
 
         RationalNumberArray *rna = rnaCreate(10);
 
-        rnaAdd(rna, rn4);
-        rnaSet(rna,rn1,1);
+        rnaSet(rna,rn1,0);
         rnaSet(rna,rn2,3);
         rnaSet(rna,rn3,6);
         rnaSet(rna,rn4,8);
-        rnaToString(rna);
 
         assert(rnEqual(n1,*rnaGet(rna,0)));
         assert(rnEqual(n2,*rnaGet(rna,3)));
         assert(rnEqual(n3,*rnaGet(rna,6)));
         assert(rnEqual(n3,*rnaGet(rna,8)));
 
-
+        rnaToString(rna);
+        printf("%d",rnaSize(rna));
         rnaRemove(rna,0,3);
         rnaToString(rna);
+
         assert(!rnEqual(n1,*rnaGet(rna,0)));
         assert(!rnEqual(n2,*rnaGet(rna,3)));
 
