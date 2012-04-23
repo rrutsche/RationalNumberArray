@@ -8,7 +8,9 @@ enum RNAError{
     NAN,
     OUT_OF_MEMORY,
     INVALID_INDEX,
-    INVALID_RNA
+    INVALID_RNA,
+    INVALID_RN,
+    NO_ERRORS
 };
 struct RationalNumberArray{
     RationalNumber* data;
@@ -31,6 +33,7 @@ RationalNumberArray* rnaCreate(const int capacity){
     rna->error = err;
     if(!rna || !rn || !err) {
         rna->error[0] = OUT_OF_MEMORY;
+        return;
     }
     rna->capacity = capacity;
     rna->size = 0;
@@ -45,6 +48,7 @@ RationalNumberArray* rnaCreate(const int capacity){
 void rnaDelete(RationalNumberArray* rna){
     if(!rna){
         rna->error[0] = INVALID_RNA;
+        return;
     }
     free(rna->data);
     free(rna);
@@ -57,6 +61,7 @@ void rnaDelete(RationalNumberArray* rna){
 int rnaCapacity(const RationalNumberArray* rna){
     if(!rna){
         rna->error[0] = INVALID_RNA;
+        return;
     }
     return rna->capacity;
 }
@@ -68,6 +73,7 @@ int rnaCapacity(const RationalNumberArray* rna){
 int rnaSize(RationalNumberArray *rna){
     if(!rna){
         rna->error[0] = INVALID_RNA;
+        return;
     }
     return rna->size;
 }
@@ -79,10 +85,14 @@ int rnaSize(RationalNumberArray *rna){
 */
 void rnaAdd(RationalNumberArray* const rna, const RationalNumber *rn){
 
-    if(rnIsNaN(*rn)){
-        rna->error[0] = NAN;
+    if(!rn){
+        rna->error[0] = INVALID_RN;
+        return;
     }else if(!rna){
         rna->error[0] = INVALID_RNA;
+        return;
+    }else if(rnIsNaN(*rn)){
+        rna->error[0] = NAN;
     }
     if(rna->size > rna->capacity - 1){
         realloc(rna->data, sizeof(rna->data) + 10 * sizeof(RationalNumber));
@@ -151,6 +161,33 @@ void rnaRemove(RationalNumberArray *rna, const int beginIndex, const int endInde
         j++;
     }
     rna->size = i;
+}
+
+int rnaError(RationalNumberArray* rna){
+
+    printf("rna error %d\n",rna->error[0]);
+    int i = rna->error[0];
+    switch(i) {
+        case 0:
+            printf("ERROR: NaN\n");
+            return 0;
+        case 1:
+            printf("ERROR: OUT_OF_MEMORY\n");
+            return 1;
+        case 2:
+            printf("ERROR: INVALID_INDEX\n");
+            return 2;
+        case 3:
+            printf("ERROR: INVALID_RNA\n");
+            return 3;
+        case 4:
+            printf("ERROR: INVALID_RN\n");
+            return 4;
+        default:
+            printf("ERROR: NO_ERRORS\n");
+            return 5;
+    }
+
 }
 
 void rnaToString(const RationalNumberArray* rna){
