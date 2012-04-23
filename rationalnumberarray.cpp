@@ -30,7 +30,7 @@ RationalNumberArray* rnaCreate(const int capacity){
     RNAError* err = (RNAError*) malloc(sizeof(RNAError));
     rna->error = err;
     if(!rna || !rn || !err) {
-        rna->error = OUT_OF_MEMORY;
+        rna->error[0] = OUT_OF_MEMORY;
     }
     rna->capacity = capacity;
     rna->size = 0;
@@ -44,7 +44,7 @@ RationalNumberArray* rnaCreate(const int capacity){
 */
 void rnaDelete(RationalNumberArray* rna){
     if(!rna){
-        rna->error = INVALID_RNA;
+        rna->error[0] = INVALID_RNA;
     }
     free(rna->data);
     free(rna);
@@ -56,7 +56,7 @@ void rnaDelete(RationalNumberArray* rna){
 */
 int rnaCapacity(const RationalNumberArray* rna){
     if(!rna){
-        rna->error = INVALID_RNA;
+        rna->error[0] = INVALID_RNA;
     }
     return rna->capacity;
 }
@@ -65,9 +65,9 @@ int rnaCapacity(const RationalNumberArray* rna){
     rnaSize()
     Returns the size of the given RationalNumberArray
 */
-int rnaSize(const RationalNumberArray *rna){
+int rnaSize(RationalNumberArray *rna){
     if(!rna){
-        rna->error = INVALID_RNA;
+        rna->error[0] = INVALID_RNA;
     }
     return rna->size;
 }
@@ -79,10 +79,10 @@ int rnaSize(const RationalNumberArray *rna){
 */
 void rnaAdd(RationalNumberArray* const rna, const RationalNumber *rn){
 
-    if(rnIsNaN(rn)){
-        rna->error = NAN;
+    if(rnIsNaN(*rn)){
+        rna->error[0] = NAN;
     }else if(!rna){
-        rna->error = INVALID_RNA;
+        rna->error[0] = INVALID_RNA;
     }
     if(rna->size > rna->capacity - 1){
         realloc(rna->data, sizeof(rna->data) + 10 * sizeof(RationalNumber));
