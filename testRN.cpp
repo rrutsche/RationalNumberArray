@@ -45,20 +45,55 @@ int main()
     assert( rnIsNaN(t4) );
 
     RationalNumberArray* rna = rnaCreate(5);
-    RationalNumber* rn1 = &n1;
 
     printf("capacity of rna: %d \n", rnaCapacity(rna));
 
     printf("-------rnaAdd()--------\n");
-    rnaAdd(rna,rn1);
-    printf("size of rna: %d \n\n", rnaSize(rna));
+    rnaAdd(rna,&n1);
+    rnaAdd(rna,&n2);
+    rnaAdd(rna,&n3);
+    printf("size of rna: %d \n", rnaSize(rna));
+    printf("capacity of rna: %d \n", rnaCapacity(rna));
+    rnaToString(rna);
 
     printf("-------rnaSet()--------\n");
-    rnaSet(rna, &n2, 10);
+    rnaSet(rna, &n2, 9);
+    printf("size of rna: %d \n", rnaSize(rna));
     printf("capacity of rna: %d \n", rnaCapacity(rna));
-    RationalNumber* rnp = rnaGet(rna, 10);
-    printf("new value in rna. index: %d, value: %d/%d \n", 10, rnp->nominator, rnp->denominator);
+    rnaToString(rna);
 
+    printf("-------rnaGet()---------\n");
+    int index = 9;
+    RationalNumber* rnp = rnaGet(rna, index);
+    printf("RationalNumber on index %d: %d/%d\n", index, rnp->nominator, rnp->denominator);
+
+    printf("-------rnaResize()---------\n");
+    int resizeTo = 20;
+    rnaResize(rna, resizeTo);
+    printf("rna resized to %d\n", resizeTo);
+    printf("size of rna: %d \n", rnaSize(rna));
+    printf("capacity of rna: %d \n", rnaCapacity(rna));
+    rnaToString(rna);
+
+    resizeTo = 2;
+    rnaResize(rna, resizeTo);
+    printf("rna resized to %d\n", resizeTo);
+    printf("size of rna: %d \n", rnaSize(rna));
+    printf("capacity of rna: %d \n", rnaCapacity(rna));
+    rnaToString(rna);
+
+    printf("-------rnaAdd()--------\n");
+    rnaAdd(rna,&n3);
+    rnaAdd(rna,&n4);
+    printf("size of rna: %d \n", rnaSize(rna));
+    printf("capacity of rna: %d \n", rnaCapacity(rna));
+    rnaToString(rna);
+
+    printf("------rnaRemove()-------\n");
+    rnaRemove(rna, 1, 2);
+    printf("size of rna: %d \n", rnaSize(rna));
+    printf("capacity of rna: %d \n", rnaCapacity(rna));
+    rnaToString(rna);
 
     printf(" successful!\n");
 

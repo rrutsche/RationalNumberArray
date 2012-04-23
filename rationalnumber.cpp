@@ -23,12 +23,9 @@ bool rnEqual(RationalNumber m, RationalNumber n){
     if(rnIsNaN(m) || rnIsNaN(n)){
         return false;
     }
-    printf("\nrnEqual\n");
-    printf("%d/%d equal %d/%d \n",m.nominator,m.denominator,n.nominator,n.denominator);
     n = rnNormalize(n);
     m = rnNormalize(m);
 
-    printf("normalized: %d/%d equal %d/%d \n",m.nominator,m.denominator,n.nominator,n.denominator);
     int mNominator = m.nominator * n.denominator;
     int nNominator = n.nominator * m.denominator;
     if(mNominator == nNominator){
@@ -40,8 +37,6 @@ bool rnEqual(RationalNumber m, RationalNumber n){
 
 bool rnLessThan(RationalNumber m, RationalNumber n){
     if(rnIsValid(m) && rnIsValid(n)){
-        printf("\nrnLessThan\n");
-        printf("%d/%d lessthan %d/%d \n",m.nominator,m.denominator,n.nominator,n.denominator);
         n = rnNormalize(n);
         m = rnNormalize(m);
         if(m.denominator * n.denominator < 0){
@@ -65,13 +60,9 @@ RationalNumber rnAdd(RationalNumber m, RationalNumber n){
     }else if(rnIsNaN(n)){
         return n;
     }
-    printf("\nrnAdd\n");
 
     m = rnNormalize(m);
     n = rnNormalize(n);
-    printf("add: ");
-    printf("%d/%d + ", m.nominator, m.denominator);
-    printf("%d/%d = ", n.nominator, n.denominator);
 
     m.nominator *= n.denominator;
     n.nominator *= m.denominator;
@@ -83,7 +74,7 @@ RationalNumber rnAdd(RationalNumber m, RationalNumber n){
     result.denominator = m.denominator;
 
     result = rnNormalize(result);
-    printf("\nrnAdd Result: %d/%d", result.nominator, result.denominator);
+
     return result;
 
 }
@@ -130,8 +121,6 @@ RationalNumber rnMultiply(RationalNumber m, RationalNumber n){
 
 RationalNumber rnDivide(RationalNumber m, RationalNumber n){
 
-    printf("divide: ");
-    printf("%d/%d / %d/%d ", m.nominator, m.denominator, n.nominator, n.denominator);
     if(rnIsNaN(m)){
         return m;
     }else if(rnIsNaN(n)){
