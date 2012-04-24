@@ -6,7 +6,6 @@ struct RationalNumberArray;
 
 #endif // RATIONALNUMBERARRAY_H
 
-using namespace std;
 #include "rationalnumber.h"
 #include <string>
 
@@ -22,5 +21,6 @@ void rnaRemove(RationalNumberArray* rna, unsigned int beginIndex, unsigned int e
 void rnaToString(const RationalNumberArray* rna);
 int rnaError(RationalNumberArray* rna);
 void freeRnaData(RationalNumberArray *rna);
-void rnaSetErrorCallback(RationalNumberArray* rna, void* pointer(RationalNumberArray* rnaErr));
+void rnaSetErrorCallback(RationalNumberArray* rna, void (*pointer)(const RationalNumberArray* rnaErr));
+void userErrorFunction(RationalNumberArray* rna);
 

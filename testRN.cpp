@@ -9,9 +9,14 @@
 #include "rationalnumber.h"
 #include "rationalnumberarray.h"
 
+void userErrorFunction(const RationalNumberArray* rna){
+    printf("############################ ERROR CALLBACK FUNCTION ############################");
+}
 
 int main()
 {
+
+
 
     printf("Performing unit tests for RationalNumber...");
     fflush(stdout);
@@ -58,6 +63,8 @@ int main()
 
         RationalNumberArray *rna = rnaCreate(10);
 
+        rnaSetErrorCallback(rna, &userErrorFunction);
+
         rnaSet(rna,rn1,0);
         rnaSet(rna,rn2,3);
         rnaSet(rna,rn3,6);
@@ -74,7 +81,6 @@ int main()
 
         assert(!rnEqual(n1,*rnaGet(rna,0)));
         assert(rnEqual(n2,*rnaGet(rna,3)));
-
 
         assert(6 == rnaSize(rna));
 

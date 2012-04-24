@@ -4,13 +4,6 @@
 #include <stdio.h>
 #include <string.h>
 
-/*
-  Ich habe ein paar Anpassungen im struct gemacht, das malloc für die errorFunction aus der rnaCreate()
-  entfernt und eine Zeile in der Callback Funktion hinzugefügt. Es kompiliert, aber ob das funktioniert,
-  weiß ich nicht. Schau einfach mal rein, vielleicht ist es auch alles falsch :-)
-
-  */
-
 enum RNAError{
     NAN,
     OUT_OF_MEMORY,
@@ -19,14 +12,18 @@ enum RNAError{
     INVALID_RN,
     NO_ERRORS
 };
+
 struct RationalNumberArray{
     RationalNumber* data;
     unsigned int size;
     unsigned int capacity;
     RNAError* error;
-    void (*errorFunction)(RationalNumberArray*);
+    void (*errorFunction)(const RationalNumberArray*);
 };
 
+void rnaSetErrorCallback(RationalNumberArray* rna, void (*pointer)(const RationalNumberArray* rnaErr)){
+    rna->errorFunction = pointer;
+}
 
 
 /*
@@ -42,11 +39,14 @@ RationalNumberArray* rnaCreate(const unsigned int capacity){
     rna->error = err;
     rna->data = rn;
     if(!rna->data || !rn || !err) {
+        if(rna->errorFunction){
+            rna->errorFunction(rna);
+        }
         rna->error[0] = OUT_OF_MEMORY;
     }
     rna->capacity = capacity;
     rna->size = 0;
-
+    rna->errorFunction = 0;
     rna->error[0] = NO_ERRORS;
     return rna;
 }
@@ -57,6 +57,10 @@ RationalNumberArray* rnaCreate(const unsigned int capacity){
 */
 void rnaDelete(RationalNumberArray* rna){
     if(!rna->data){
+        if(rna->errorFunction){
+            rna->errorFunction(rna);
+        }
+
         rna->error[0] = INVALID_RNA;
         return;
     }
@@ -71,6 +75,9 @@ void rnaDelete(RationalNumberArray* rna){
 */
 int rnaCapacity(const RationalNumberArray* rna){
     if(!rna->data){
+        if(rna->errorFunction){
+            rna->errorFunction(rna);
+        }
         rna->error[0] = INVALID_RNA;
         return 0;
     }
@@ -84,6 +91,10 @@ int rnaCapacity(const RationalNumberArray* rna){
 */
 int rnaSize(RationalNumberArray *rna){
     if(!rna->data){
+        if(rna->errorFunction){
+            rna->errorFunction(rna);
+        }
+
         rna->error[0] = INVALID_RNA;
         return 0;
     }
@@ -101,12 +112,23 @@ void rnaAdd(RationalNumberArray* const rna, const RationalNumber *rn){
     //rnaSet(rna , rn, rna->size); ???
 
     if(!rn){
+        if(rna->errorFunction){
+            rna->errorFunction(rna);
+        }
         rna->error[0] = INVALID_RN;
         return;
     }else if(!rna->data){
+        if(rna->errorFunction){
+            rna->errorFunction(rna);
+        }
+
         rna->error[0] = INVALID_RNA;
         return;
     }else if(rnIsNaN(*rn)){
+        if(rna->errorFunction){
+            rna->errorFunction(rna);
+        }
+
         rna->error[0] = NAN;
         return;
     }
@@ -125,6 +147,10 @@ void rnaAdd(RationalNumberArray* const rna, const RationalNumber *rn){
 */
 void rnaResize(RationalNumberArray* const rna, const unsigned int size){
     if(!rna->data){
+        if(rna->errorFunction){
+            rna->errorFunction(rna);
+        }
+
         rna->error[0] = INVALID_RNA;
         return;
     }
@@ -145,12 +171,24 @@ void rnaResize(RationalNumberArray* const rna, const unsigned int size){
 void rnaSet(RationalNumberArray* const rna, const RationalNumber* rn, const unsigned int index){
 
     if(!rn){
+        if(rna->errorFunction){
+            rna->errorFunction(rna);
+        }
+
         rna->error[0] = INVALID_RN;
         return;
     }else if(!rna->data){
+        if(rna->errorFunction){
+            rna->errorFunction(rna);
+        }
+
         rna->error[0] = INVALID_RNA;
         return;
     }else if(rnIsNaN(*rn)){
+        if(rna->errorFunction){
+            rna->errorFunction(rna);
+        }
+
         rna->error[0] = NAN;
     }
     RationalNumber rnTemp = {0,1};
@@ -176,11 +214,20 @@ void rnaSet(RationalNumberArray* const rna, const RationalNumber* rn, const unsi
 */
 RationalNumber* rnaGet(const RationalNumberArray* rna, const unsigned int index){
     if(!rna->data){
+        if(rna->errorFunction){
+            rna->errorFunction(rna);
+        }
         rna->error[0] = INVALID_RNA;
         return 0;
     }
     if(index >= rna->size){
+        if(rna->errorFunction){
+          rna->errorFunction(rna);
+        }
         rna->error[0] = INVALID_INDEX;
+        if(rna->errorFunction){
+            rna->errorFunction(rna);
+        }
         return &(rna->data[index]);
     }
     rna->error[0] = NO_ERRORS;
@@ -194,6 +241,9 @@ RationalNumber* rnaGet(const RationalNumberArray* rna, const unsigned int index)
 void rnaRemove(RationalNumberArray *rna, const unsigned int beginIndex, const unsigned int endIndex){
 
     if(!rna->data){
+        if(rna->errorFunction){
+            rna->errorFunction(rna);
+        }
         rna->error[0] = INVALID_RNA;
         return;
     }
@@ -240,10 +290,6 @@ void freeRnaData(RationalNumberArray *rna){
     rna->data = 0;
 }
 
-void rnaSetErrorCallback(RationalNumberArray* rna, void pointer(RationalNumberArray* rnaErr)){
-
-    rna->errorFunction = pointer;
-}
 
 void rnaToString(const RationalNumberArray* rna){
     printf("[");
