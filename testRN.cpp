@@ -70,10 +70,10 @@ int main()
         rnaRemove(rna,0,3);
         rnaToString(rna);
 
-        assert(!rnEqual(n1,*rnaGet(rna,0)));
-        assert(!rnEqual(n2,*rnaGet(rna,3)));
+        assert(rnEqual(n1,*rnaGet(rna,0)));
+        assert(rnEqual(n2,*rnaGet(rna,3)));
 
-        assert(10 == rnaSize(rna));
+        assert(6 == rnaSize(rna));
 
         rnaSet(rna, rn1, 14);
         assert(15 == rnaSize(rna));
