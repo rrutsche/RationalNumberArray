@@ -38,6 +38,9 @@ RationalNumberArray* rnaCreate(const unsigned int capacity){
 
     rna->error = err;
     rna->data = rn;
+    if(!rna){
+        return 0;
+    }
     if(!rna->data || !rn || !err) {
         if(rna->errorFunction){
             rna->errorFunction(rna);
@@ -258,6 +261,10 @@ void rnaRemove(RationalNumberArray *rna, const unsigned int beginIndex, const un
     rna->error[0] = NO_ERRORS;
 }
 
+/*
+    rnaError()
+    Returns the ErrorCode
+*/
 int rnaError(const RationalNumberArray* rna){
 
 
