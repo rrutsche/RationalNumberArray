@@ -20,4 +20,5 @@ void rnaSet(RationalNumberArray* const rna, const RationalNumber* rn, const int 
 RationalNumber* rnaGet(const RationalNumberArray* rna, const int index);
 void rnaRemove(RationalNumberArray* rna, int beginIndex, int endIndex);
 void rnaToString(const RationalNumberArray* rna);
+int rnaError(RationalNumberArray* rna);
 

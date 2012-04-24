@@ -52,6 +52,8 @@ int main()
         RationalNumber *rn2 = &n2;
         RationalNumber *rn3 = &n3;
         RationalNumber *rn4 = &n4;
+        RationalNumber *rn5 = &nn;
+        RationalNumber *rn6 = 0;
 
         RationalNumberArray *rna = rnaCreate(10);
 
@@ -66,11 +68,10 @@ int main()
         assert(rnEqual(n3,*rnaGet(rna,8)));
 
         rnaToString(rna);
-        printf("%d",rnaSize(rna));
         rnaRemove(rna,0,3);
         rnaToString(rna);
 
-        assert(rnEqual(n1,*rnaGet(rna,0)));
+        assert(!rnEqual(n1,*rnaGet(rna,0)));
         assert(rnEqual(n2,*rnaGet(rna,3)));
 
         assert(6 == rnaSize(rna));
@@ -81,6 +82,12 @@ int main()
 
         rnaAdd(rna, rn2);
         assert(rnEqual(n2,*rnaGet(rna,rnaSize(rna)-1)));
+
+        rnaAdd(rna, rn5);
+        assert(0 == rnaError(rna));
+
+        rnaAdd(rna, rn6);
+        assert(4 == rnaError(rna));
 
 /*
     RationalNumberArray* rna = rnaCreate(5);
