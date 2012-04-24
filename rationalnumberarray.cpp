@@ -4,6 +4,13 @@
 #include <stdio.h>
 #include <string.h>
 
+/*
+  Ich habe ein paar Anpassungen im struct gemacht, das malloc für die errorFunction aus der rnaCreate()
+  entfernt und eine Zeile in der Callback Funktion hinzugefügt. Es kompiliert, aber ob das funktioniert,
+  weiß ich nicht. Schau einfach mal rein, vielleicht ist es auch alles falsch :-)
+
+  */
+
 enum RNAError{
     NAN,
     OUT_OF_MEMORY,
