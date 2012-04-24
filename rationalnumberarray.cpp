@@ -258,9 +258,9 @@ void rnaRemove(RationalNumberArray *rna, const unsigned int beginIndex, const un
     rna->error[0] = NO_ERRORS;
 }
 
-int rnaError(RationalNumberArray* rna){
+int rnaError(const RationalNumberArray* rna){
 
-    printf("-------------rna error------------- %d\n",rna->error[0]);
+
     int i = rna->error[0];
     switch(i) {
         case 0:

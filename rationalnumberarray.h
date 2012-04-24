@@ -19,7 +19,7 @@ void rnaSet(RationalNumberArray* const rna, const RationalNumber* rn, const unsi
 RationalNumber* rnaGet(const RationalNumberArray* rna, const unsigned int index);
 void rnaRemove(RationalNumberArray* rna, unsigned int beginIndex, unsigned int endIndex);
 void rnaToString(const RationalNumberArray* rna);
-int rnaError(RationalNumberArray* rna);
+int rnaError(const RationalNumberArray* rna);
 void freeRnaData(RationalNumberArray *rna);
 void rnaSetErrorCallback(RationalNumberArray* rna, void (*pointer)(const RationalNumberArray* rnaErr));
 void userErrorFunction(RationalNumberArray* rna);

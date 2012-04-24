@@ -147,12 +147,6 @@ int gcd(int m, int n){
     }
 }
 
-int kgV(int m, int n){
-    int divisor = gcd(m, n);
-    int result = (m * n) / divisor;
-    return result;
-}
-
 
 RationalNumber rnNormalize(RationalNumber n){
     int divisor = gcd(n.nominator, n.denominator);

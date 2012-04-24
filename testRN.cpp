@@ -10,7 +10,12 @@
 #include "rationalnumberarray.h"
 
 void userErrorFunction(const RationalNumberArray* rna){
-    printf("############################ ERROR CALLBACK FUNCTION ############################");
+    printf("############################ ERROR CALLBACK FUNCTION ############################\n");
+}
+
+void userErrorNasenbaer(const RationalNumberArray* rna){
+    printf("#######Nasenbaer########\n");
+    printf("ErrorCode: %d\n", rnaError(rna));
 }
 
 int main()
@@ -63,7 +68,7 @@ int main()
 
         RationalNumberArray *rna = rnaCreate(10);
 
-        rnaSetErrorCallback(rna, &userErrorFunction);
+        rnaSetErrorCallback(rna, &userErrorNasenbaer);
 
         rnaSet(rna,rn1,0);
         rnaSet(rna,rn2,3);
