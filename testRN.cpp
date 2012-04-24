@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <assert.h>
+#include <limits.h>
 
 #include "rationalnumber.h"
 #include "rationalnumberarray.h"
@@ -84,11 +85,35 @@ int main()
         rnaAdd(rna, rn2);
         assert(rnEqual(n2,*rnaGet(rna,rnaSize(rna)-1)));
 
+        rnaSet(rna, rn4, 2);
+
+        rnaResize(rna, 5);
+        assert(5 == rnaSize(rna));
+        assert(5 == rnaCapacity(rna));
+        assert(rnEqual(n4, *rnaGet(rna, 2)));
+
+        rnaResize(rna, 15);
+        assert(5 == rnaSize(rna));
+        assert(15 == rnaCapacity(rna));
+        assert(rnEqual(n4, *rnaGet(rna, 2)));
+
+        assert(5 == rnaError(rna));//NO_ERRORS
+
         rnaAdd(rna, rn5);
-        assert(0 == rnaError(rna));
+        assert(0 == rnaError(rna));//NAN
 
         rnaAdd(rna, rn6);
-        assert(4 == rnaError(rna));
+        assert(4 == rnaError(rna));//INVALID_RN
+
+        rnaGet(rna, 100);
+        assert(2 == rnaError(rna));//INVALID_INDEX
+
+        freeRnaData(rna);
+        rnaGet(rna, 0);
+        assert(3 == rnaError(rna));
+
+
+
 
 /*
     RationalNumberArray* rna = rnaCreate(5);
